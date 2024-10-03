@@ -1,26 +1,64 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <NavBar v-if="isSuccess"/>
+  <Form  @save-data="saveDatos"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Form from './components/Form.vue';
+import NavBar from './components/NavBar.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Form,
+    NavBar
+  },
+  data() {
+    return {
+      isSuccess: false,
+    }
+  },
+  methods: {
+    saveDatos(value) {
+      if (value) {
+        this.isSuccess = true;
+      }else {
+        this.isSuccess = value;
+      }
+      console.log('Entro', value);
+      
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+@font-face {
+  font-family: "Karla", sans-serif;
+  src: 
+  url("./assets/fonts/Karla-Italic-VariableFont_wght.ttf"),
+  url("./assets/fonts/Karla-VariableFont_wght.ttf");
 }
+:root {
+  font-size: 62.5%;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Karla", sans-serif;
+  font-size: 1.6rem;
+  height: 100%;
+}
+#app {
+  height: 100%;
+}
+
+/* @media screen and (min-width: 64rem) {
+  body {
+    height: 100vh;
+  }    
+} */
 </style>
