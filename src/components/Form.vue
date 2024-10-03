@@ -136,7 +136,7 @@
 
 <script>
 import { useVuelidate } from "@vuelidate/core";
-import { helpers, required, email } from "@vuelidate/validators";
+import { helpers, required, email, alpha, } from "@vuelidate/validators";
 
 export default {
     setup () {
@@ -163,15 +163,16 @@ export default {
         }
     },
     validations() {
-        const checked = (value) => value === true || 'Debes aceptar los términos y condiciones'; 
-                    
+        const alphaWithSpaces = helpers.regex(/^[A-Za-zÀ-ÿ\s]+$/);            
         return {
             form: {
                 firstName: {
                     required: helpers.withMessage('This field is required', required),
+                    alphaWithSpaces: helpers.withMessage('Solo se permiten letras y espacios.', alphaWithSpaces),
                 },
                 lastName: {
                     required: helpers.withMessage('This field is required', required),
+                    alphaWithSpaces: helpers.withMessage('Solo se permiten letras y espacios.', alphaWithSpaces),
                 },
                 email: {
                     required: helpers.withMessage('This field is required', required),
@@ -197,6 +198,8 @@ export default {
             const formValid = this.validarForm();
             if (formValid) {
                 this.$emit('save-data', this.form)
+                this.v$.$reset() // Limpiar errores de validación
+                this.clearForm();
             } else {
                 this.$emit('save-data', formValid)
             }
@@ -207,12 +210,19 @@ export default {
             if (!this.v$.$invalid) {      
                 return true;
             } else {
-                console.log(this.v$);
                 return false;
             }
             } else {
               return false;
             }
+        },
+        clearForm() {
+            this.form.firstName = '';
+            this.form.lastName = '';
+            this.form.email = '';
+            this.form.query = null;
+            this.form.message = '';
+            this.form.termCondition = false;
         }
     }
 }

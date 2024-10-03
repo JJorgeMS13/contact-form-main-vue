@@ -25,8 +25,6 @@ export default {
       }else {
         this.isSuccess = value;
       }
-      console.log('Entro', value);
-      
     }
   }
 }

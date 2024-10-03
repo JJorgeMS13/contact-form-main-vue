@@ -20,7 +20,7 @@
 
 <style lang="scss" scoped>
 .card {
-    position: absolute;
+    position: fixed;
     margin: 2.4rem;
     .container {
         display: flex;
